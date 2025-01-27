@@ -22,6 +22,8 @@ public class ProjWeaponClass : MonoBehaviour
     
     [SerializeField] private bool allowInvoke = true;
 
+    public int damage;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
