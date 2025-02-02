@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCameraController : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PlayerCameraController : MonoBehaviour
     private float xRoation;
     private float yRoation;
 
+    [Header ("InputActions")]
+    [SerializeField] private InputActionReference lookAction;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +26,8 @@ public class PlayerCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivityX;
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivityY;
+        float mouseX = lookAction.action.ReadValue<Vector2>().x * Time.deltaTime * mouseSensitivityX;
+        float mouseY = lookAction.action.ReadValue<Vector2>().y * Time.deltaTime * mouseSensitivityY;
 
         yRoation += mouseX;
         xRoation -= mouseY;

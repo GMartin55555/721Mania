@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using  UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movementDirection;
 
+    [Header ("InputActions")]
+    [SerializeField] private InputActionReference movementAction;
+    [SerializeField] private InputActionReference jumpAction;
+
+
     private Rigidbody rb;
 
     private void Start()
@@ -32,6 +38,16 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+    }
+
+    private void OnEnable()
+    {
+        jumpAction.action.started += Jump;
+    }
+
+    private void OnDisable()
+    {
+        jumpAction.action.started -= Jump;
     }
 
     private void Update()
@@ -57,16 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MyInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetButton("Jump") && isGrounded && readyToJump)
-        {
-            readyToJump = false;
-
-            Jump();
-            Invoke(nameof(JumpReset), jumpCooldown);
-        }
+        horizontalInput = movementAction.action.ReadValue<Vector2>().x;
+        verticalInput = movementAction.action.ReadValue<Vector2>().y;
     }
 
     private void MovePlayer()
@@ -83,11 +91,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    private void Jump(InputAction.CallbackContext context)
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        if (isGrounded && readyToJump)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
     private void JumpReset()
