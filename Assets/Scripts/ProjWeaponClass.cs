@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ProjWeaponClass : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class ProjWeaponClass : MonoBehaviour
 
     private int bulletsLeft, bulletsShot;
 
-    private bool shooting, readyToShoot, reloading;
+    private bool readyToShoot, reloading;
 
     [SerializeField] private Camera fpsCamera;
     [SerializeField] private Transform attackPoint;
@@ -24,31 +25,54 @@ public class ProjWeaponClass : MonoBehaviour
 
     public int damage;
 
+    [Header("InputActions")]
+    [SerializeField] private InputActionReference fireAction;
+    [SerializeField] private InputActionReference reloadAction;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        MyInput();
+        fireAction.action.started += ShootInput;
+        reloadAction.action.started += ReloadInput;
     }
 
-    private void MyInput()
+    private void OnDisable()
     {
-        if (allowButtonHold) shooting = Input.GetButton("Fire1");
-        else shooting = Input.GetButtonDown("Fire1");
+        fireAction.action.started -= ShootInput;
+        reloadAction.action.started -= ReloadInput;
+    }
 
+    private void FixedUpdate()
+    {
+        if (bulletsLeft <= 0)
+        {
+            Reload();
+        }
 
-        if (Input.GetButtonDown("Fire2") && bulletsLeft < magazineSize && !reloading) Reload();
-        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0) Reload();
-
-        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        if(readyToShoot && !reloading && bulletsLeft > 0 && allowButtonHold && fireAction.action.ReadValue<float>() == 1)
         {
             bulletsShot = 0;
             Shoot();
         }
+    }
+
+    private void ShootInput(InputAction.CallbackContext context)
+    {    
+        if (readyToShoot && !reloading && bulletsLeft > 0 && !allowButtonHold)
+        {
+            bulletsShot = 0;
+            Shoot();
+        }
+    }
+
+    private void ReloadInput(InputAction.CallbackContext context)
+    {
+        Reload();
     }
 
     private void Shoot()
