@@ -142,11 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534791c44cbc7dd499e253fde9b220c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 70
+  moveSpeed: 40
   groundDrag: 5
   jumpForce: 5
   jumpCooldown: 0.1
-  airMultiplier: 1.075
+  airMultiplier: 0.3
   playerHeight: 1.99
   groundMask:
     serializedVersion: 2
@@ -204,13 +204,14 @@ MonoBehaviour:
   timeBetweenShots: 0
   magazineSize: 10
   bulletsPerTap: 1
-  allowButtonHold: 0
+  allowButtonHold: 1
   fpsCamera: {fileID: 2392851599651320722}
   attackPoint: {fileID: 7419860723870577506}
   allowInvoke: 1
   damage: 10
   fireAction: {fileID: 5460560795560618255, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   reloadAction: {fileID: -6849372930209742558, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
+  ammoCount: {fileID: 0}
 --- !u!114 &7890386911487134675
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class ProjWeaponClass : MonoBehaviour
 {
@@ -29,10 +31,14 @@ public class ProjWeaponClass : MonoBehaviour
     [SerializeField] private InputActionReference fireAction;
     [SerializeField] private InputActionReference reloadAction;
 
+    [Header("UI")]
+    [SerializeField] private TMP_Text ammoCount;
+
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
+        ammoCount.text = bulletsLeft.ToString();
     }
 
     private void OnEnable()
@@ -107,6 +113,8 @@ public class ProjWeaponClass : MonoBehaviour
 
         bulletsLeft--;
         bulletsShot++;
+        
+        ammoCount.text = bulletsLeft.ToString();
 
         if (allowInvoke)
         {
@@ -129,12 +137,14 @@ public class ProjWeaponClass : MonoBehaviour
     private void Reload()
     {
         reloading = true;
+        ammoCount.text = "???";
         Invoke("ReloadFinished", reloadTime);
     }
 
     private void ReloadFinished()
     {
         bulletsLeft = magazineSize;
+        ammoCount.text = bulletsLeft.ToString();
         reloading = false;
     }
 }
