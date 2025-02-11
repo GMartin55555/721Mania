@@ -7,6 +7,7 @@ public class EnemyHealthScript : MonoBehaviour
     [SerializeField] private int maxHealth;
 
     private int currentHealth;
+    public bool canTakeDamage = true;
 
     private void Awake()
     {
@@ -24,11 +25,15 @@ public class EnemyHealthScript : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (canTakeDamage)
         {
-            Die();
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
         }
+
     }
 
     private void Die()

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class TestDummyAIScript : MonoBehaviour
 {
-    [SerializeField] private bool allowFolow;
+    public bool allowFolow;
 
 
     private NavMeshAgent agent;
@@ -26,10 +26,19 @@ public class TestDummyAIScript : MonoBehaviour
         {
             FollowPlayer();
         }
+        else
+        {
+            StopFollowing();
+        }
     }
 
     private void FollowPlayer()
     {
         agent.SetDestination(player.position);
+    }
+
+    private void StopFollowing()
+    {
+        agent.SetDestination(transform.position);
     }
 }
