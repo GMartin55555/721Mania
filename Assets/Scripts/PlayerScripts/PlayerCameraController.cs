@@ -29,7 +29,7 @@ public class PlayerCameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         float mouseX = lookAction.action.ReadValue<Vector2>().x * Time.deltaTime * mouseSensitivityX;
         float mouseY = lookAction.action.ReadValue<Vector2>().y * Time.deltaTime * mouseSensitivityY;
