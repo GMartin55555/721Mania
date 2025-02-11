@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 882574071677599563}
   - component: {fileID: 5311924306262670222}
   - component: {fileID: 3783251760953754834}
+  - component: {fileID: 3228584663786290193}
   - component: {fileID: 7890386911487134675}
   m_Layer: 6
   m_Name: Player
@@ -168,8 +169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivityX: 10
   mouseSensitivityY: 10
+  mania: {fileID: 3228584663786290193}
+  camera: {fileID: 2392851599651320722}
   orientation: {fileID: 3835664033819869496}
   lookAction: {fileID: 1581539913638257549, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
+  moveAction: {fileID: 8669014615362265573, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
 --- !u!114 &5311924306262670222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +216,23 @@ MonoBehaviour:
   fireAction: {fileID: 5460560795560618255, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   reloadAction: {fileID: -6849372930209742558, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   ammoCount: {fileID: 0}
+--- !u!114 &3228584663786290193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660538845261670361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c351de6de95f0164c9d1efa69b4c1515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maniaScore: 0
+  allowManiaPassive: 0
+  maniaScoreText: {fileID: 0}
+  maniaBar: {fileID: 0}
+  maniaSlider: {fileID: 0}
 --- !u!114 &7890386911487134675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +436,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 57
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
