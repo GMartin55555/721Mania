@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealthScript : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
+    private GameObject self;
 
     private int currentHealth;
     public bool canTakeDamage = true;
@@ -12,6 +13,7 @@ public class EnemyHealthScript : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        self = gameObject;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -38,6 +40,6 @@ public class EnemyHealthScript : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        self.SetActive(false);
     }
 }

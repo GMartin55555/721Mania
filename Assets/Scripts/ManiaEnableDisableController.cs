@@ -24,7 +24,7 @@ public class ManiaEnableDisableController : MonoBehaviour
 
     private void ShiftingEnvironment()
     {
-        if (mania.maniaScore >= maniaThreshold)
+        if (mania.maniaScore <= maniaThreshold)
         {
             foreach (GameObject obj in shiftingEnvironment)
             {
@@ -60,6 +60,8 @@ public class ManiaEnableDisableController : MonoBehaviour
             {
                 GameObject child = obj.transform.GetChild(0).gameObject;
                 child.tag = "Untagged";
+                var rb = child.GetComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.FreezePosition;
                 var followScript = child.GetComponent<TestDummyAIScript>();
                 followScript.allowFolow = false;
                 var healthScript = child.GetComponent<EnemyHealthScript>();
