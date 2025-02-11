@@ -33,6 +33,10 @@ public class ManiaControllerScript : MonoBehaviour
         {
             SetManiaScore(100);
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SetManiaScore(50);
+        }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
