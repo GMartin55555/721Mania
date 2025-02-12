@@ -7,32 +7,36 @@ using TMPro;
 
 public class ProjWeaponClass : MonoBehaviour
 {
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private float shootForce, upwardForce;
+    public GameObject projectile;
+    public float shootForce, upwardForce;
     [Header("Fire Rate")]
-    [SerializeField] private float timeBetweenShooting, spread, reloadTime;
+    public float timeBetweenShooting, spread, reloadTime;
     [Header("Rate of Burst")]
-    [SerializeField] private float timeBetweenShots;
-    [SerializeField] private int magazineSize, bulletsPerTap;
-    [SerializeField] private bool allowButtonHold;
+    public float timeBetweenShots;
+    public int magazineSize, bulletsPerTap;
+    public bool allowButtonHold;
 
-    private int bulletsLeft, bulletsShot;
+    public int bulletsLeft, bulletsShot;
 
-    private bool readyToShoot, reloading;
+    public bool readyToShoot, reloading;
 
-    [SerializeField] private Camera fpsCamera;
-    [SerializeField] private Transform attackPoint;
+    public Camera fpsCamera;
+    public Transform attackPoint;
     
-    [SerializeField] private bool allowInvoke = true;
+    public bool allowInvoke = true;
 
-    public int damage;
+    public float damage;
 
     [Header("InputActions")]
-    [SerializeField] private InputActionReference fireAction;
-    [SerializeField] private InputActionReference reloadAction;
+    public InputActionReference fireAction;
+    public InputActionReference reloadAction;
+    public InputActionReference altFireAction;
 
     [Header("UI")]
-    [SerializeField] private TMP_Text ammoCount;
+    [SerializeField] public TMP_Text ammoCount;
+    public RawImage gunSprite;
+    [Header("Gun Slot")]
+    public int gunSlot;
 
     private void Awake()
     {
@@ -45,12 +49,20 @@ public class ProjWeaponClass : MonoBehaviour
     {
         fireAction.action.started += ShootInput;
         reloadAction.action.started += ReloadInput;
+
+        bulletsLeft = magazineSize;
+        readyToShoot = true;
+        gunSprite.gameObject.SetActive(true);
+        ammoCount.gameObject.SetActive(true);
+        ammoCount.text = bulletsLeft.ToString();
     }
 
     private void OnDisable()
     {
         fireAction.action.started -= ShootInput;
         reloadAction.action.started -= ReloadInput;
+        gunSprite.gameObject.SetActive(false);
+        ammoCount.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -67,7 +79,7 @@ public class ProjWeaponClass : MonoBehaviour
         }
     }
 
-    private void ShootInput(InputAction.CallbackContext context)
+    public void ShootInput(InputAction.CallbackContext context)
     {    
         if (readyToShoot && !reloading && bulletsLeft > 0 && !allowButtonHold)
         {
@@ -76,7 +88,7 @@ public class ProjWeaponClass : MonoBehaviour
         }
     }
 
-    private void ReloadInput(InputAction.CallbackContext context)
+    public void ReloadInput(InputAction.CallbackContext context)
     {
         Reload();
     }
@@ -114,7 +126,7 @@ public class ProjWeaponClass : MonoBehaviour
         bulletsLeft--;
         bulletsShot++;
         
-        ammoCount.text = bulletsLeft.ToString();
+        ammoCount.text = (bulletsLeft/bulletsPerTap).ToString();
 
         if (allowInvoke)
         {

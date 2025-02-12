@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyHealthScript : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
+    [SerializeField] private float maxHealth;
     private GameObject self;
 
-    private int currentHealth;
+    private float currentHealth;
     public bool canTakeDamage = true;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class EnemyHealthScript : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage(float damage)
     {
         if (canTakeDamage)
         {

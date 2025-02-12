@@ -6,7 +6,7 @@ public class TestProjClass : MonoBehaviour
 {
     private GameObject player;
 
-    public int damage;
+    public float damage;
 
     private void Start()
     {
@@ -16,7 +16,6 @@ public class TestProjClass : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Invoke("Destroy", 0.1f);
         Destroy();
     }
 
