@@ -43,7 +43,9 @@ public class PistolScript : ProjWeaponClass
 
     private void AltShoot()
     {
-        altFireReady = false;
+        altFireReady = false; 
+        readyToShoot = false;
+        reloading = true;
         Invoke("AltDecay", altFireDelay);
         Invoke("AltFireReset", altFireCooldown);
     }
@@ -51,10 +53,13 @@ public class PistolScript : ProjWeaponClass
     private void AltDecay()
     {
         mania.ManiaDecay(20);
+        readyToShoot = true;
+        reloading = false;
     }
 
     private void AltFireReset()
     {
         altFireReady = true;
+        readyToShoot = true;
     }
 }

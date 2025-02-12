@@ -10,12 +10,16 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private PistolScript pistolScript;
     [SerializeField] private UziScript uziScript;
     private int pistolSlot, uziSlot;
+    [Header("SwitchTime")]
+    [SerializeField] private float switchTime;
 
     [Header("InputReferences")]
     [SerializeField] private InputActionReference slot1;
     [SerializeField] private InputActionReference slot2;
 
     private int currentSlot;
+
+    private IEnumerator setWeapon;
 
     private void Awake()
     {
@@ -26,7 +30,7 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetWeapon(pistolSlot);
+        pistolScript.enabled = true;
     }
 
     private void OnEnable()
@@ -45,8 +49,9 @@ public class WeaponManager : MonoBehaviour
     {
         if (currentSlot != pistolSlot)
         {
+            setWeapon = SetWeapon(pistolSlot);
             currentSlot = pistolSlot;
-            SetWeapon(pistolSlot);
+            StartCoroutine(setWeapon);
         }
     }
 
@@ -54,21 +59,24 @@ public class WeaponManager : MonoBehaviour
     {
         if (currentSlot != uziSlot)
         {
+            setWeapon = SetWeapon(uziSlot);
             currentSlot = uziSlot;
-            SetWeapon(uziSlot);
+            StartCoroutine(setWeapon);
         }
     }
 
-    private void SetWeapon(int slot)
+    private IEnumerator SetWeapon(int slot)
     {
         if (slot == pistolSlot)
         {
             uziScript.enabled = false;
+            yield return new WaitForSeconds(switchTime);
             pistolScript.enabled = true;
         }
         else if (slot == uziSlot)
         {
             pistolScript.enabled = false;
+            yield return new WaitForSeconds(switchTime);
             uziScript.enabled = true;
         }
     }

@@ -15,7 +15,7 @@ public class PlayerHealthScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision Detected");
+
         if (collision.gameObject.CompareTag("DamagesPlayer"))
         {
             TakeDamage(collision.gameObject.GetComponent<DamageToPlayerScript>().damage);
