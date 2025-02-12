@@ -54,7 +54,7 @@ public class ProjWeaponClass : MonoBehaviour
         readyToShoot = true;
         gunSprite.gameObject.SetActive(true);
         ammoCount.gameObject.SetActive(true);
-        ammoCount.text = bulletsLeft.ToString();
+        ammoCount.text = (bulletsLeft / bulletsPerTap).ToString();
     }
 
     private void OnDisable()
@@ -72,7 +72,9 @@ public class ProjWeaponClass : MonoBehaviour
             Reload();
         }
 
-        if(readyToShoot && !reloading && bulletsLeft > 0 && allowButtonHold && fireAction.action.ReadValue<float>() == 1)
+        ammoCount.text = (bulletsLeft / bulletsPerTap).ToString();
+
+        if (readyToShoot && !reloading && bulletsLeft > 0 && allowButtonHold && fireAction.action.ReadValue<float>() == 1)
         {
             bulletsShot = 0;
             Shoot();
@@ -87,6 +89,7 @@ public class ProjWeaponClass : MonoBehaviour
             Shoot();
         }
     }
+
 
     public void ReloadInput(InputAction.CallbackContext context)
     {

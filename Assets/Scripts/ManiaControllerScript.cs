@@ -57,6 +57,16 @@ public class ManiaControllerScript : MonoBehaviour
         {
             ManiaGrowth(0.1f);
         }
+        else
+        {
+            ManiaGrowth(0.05f);
+        }
+
+
+        if (maniaScore <= 0)
+        {
+            maniaScore = 0;
+        }
 
         maniaScoreText.text = maniaScore.ToString();
         ManiaDisplay();
@@ -70,7 +80,7 @@ public class ManiaControllerScript : MonoBehaviour
         }
     }
 
-    private void ManiaDecay(float decay)
+    public void ManiaDecay(float decay)
     {
         maniaScore -= decay;
     }

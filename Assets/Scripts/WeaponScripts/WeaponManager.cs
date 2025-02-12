@@ -8,8 +8,8 @@ public class WeaponManager : MonoBehaviour
 {
     [Header("WeaponScripts")]
     [SerializeField] private PistolScript pistolScript;
-    [SerializeField] private ShotgunScript shotgunScript;
-    private int pistolSlot, shotgunSlot;
+    [SerializeField] private UziScript uziScript;
+    private int pistolSlot, uziSlot;
 
     [Header("InputReferences")]
     [SerializeField] private InputActionReference slot1;
@@ -20,7 +20,7 @@ public class WeaponManager : MonoBehaviour
     private void Awake()
     {
         pistolSlot = pistolScript.gunSlot;
-        shotgunSlot = shotgunScript.gunSlot;
+        uziSlot = uziScript.gunSlot;
     }
 
     // Start is called before the first frame update
@@ -52,10 +52,10 @@ public class WeaponManager : MonoBehaviour
 
     private void SwitchWeapon2(InputAction.CallbackContext context)
     {
-        if (currentSlot != shotgunSlot)
+        if (currentSlot != uziSlot)
         {
-            currentSlot = shotgunSlot;
-            SetWeapon(shotgunSlot);
+            currentSlot = uziSlot;
+            SetWeapon(uziSlot);
         }
     }
 
@@ -63,13 +63,13 @@ public class WeaponManager : MonoBehaviour
     {
         if (slot == pistolSlot)
         {
-            shotgunScript.enabled = false;
+            uziScript.enabled = false;
             pistolScript.enabled = true;
         }
-        else if (slot == shotgunSlot)
+        else if (slot == uziSlot)
         {
             pistolScript.enabled = false;
-            shotgunScript.enabled = true;
+            uziScript.enabled = true;
         }
     }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7964053227777117980}
   m_Layer: 6
-  m_Name: ShotgunAttackPoint
+  m_Name: UziAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 882574071677599563}
   - component: {fileID: 5311924306262670222}
   - component: {fileID: 6177308808392778675}
-  - component: {fileID: 5561047782484584655}
+  - component: {fileID: 909548440328401780}
   - component: {fileID: 3228584663786290193}
   - component: {fileID: 7890386911487134675}
   - component: {fileID: 635780588182834413}
@@ -243,6 +243,10 @@ MonoBehaviour:
   magazineSize: 10
   bulletsPerTap: 1
   allowButtonHold: 1
+  bulletsLeft: 0
+  bulletsShot: 0
+  readyToShoot: 0
+  reloading: 0
   fpsCamera: {fileID: 2392851599651320722}
   attackPoint: {fileID: 7419860723870577506}
   allowInvoke: 1
@@ -253,7 +257,7 @@ MonoBehaviour:
   ammoCount: {fileID: 0}
   gunSprite: {fileID: 0}
   gunSlot: 1
---- !u!114 &5561047782484584655
+--- !u!114 &909548440328401780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,23 +266,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5660538845261670361}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5de87f737c2242e48a6ccd85a72e3055, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d312a8215a3f5d4fa9084a8bf188c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 255572177520342742, guid: ac58f59adeaecfd478257f5692fcd622, type: 3}
-  shootForce: 20
+  shootForce: 60
   upwardForce: 0
-  timeBetweenShooting: 0.6
-  spread: 0.5
-  reloadTime: 3
+  timeBetweenShooting: 0.1
+  spread: 0.2
+  reloadTime: 1.2
   timeBetweenShots: 0
-  magazineSize: 40
-  bulletsPerTap: 10
-  allowButtonHold: 0
+  magazineSize: 25
+  bulletsPerTap: 1
+  allowButtonHold: 1
+  bulletsLeft: 0
+  bulletsShot: 0
+  readyToShoot: 0
+  reloading: 0
   fpsCamera: {fileID: 2392851599651320722}
   attackPoint: {fileID: 7964053227777117980}
   allowInvoke: 1
-  damage: 2
+  damage: 9
   fireAction: {fileID: 5460560795560618255, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   reloadAction: {fileID: -6849372930209742558, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   altFireAction: {fileID: -8219122467895046752, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
@@ -345,7 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pistolScript: {fileID: 6177308808392778675}
-  shotgunScript: {fileID: 5561047782484584655}
+  uziScript: {fileID: 909548440328401780}
   slot1: {fileID: 5188135198990998637, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   slot2: {fileID: 5692756510128377386, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
 --- !u!1 &6723760760875195585
