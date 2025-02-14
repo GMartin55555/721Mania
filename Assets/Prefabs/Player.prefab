@@ -257,6 +257,9 @@ MonoBehaviour:
   ammoCount: {fileID: 0}
   gunSprite: {fileID: 0}
   gunSlot: 1
+  mania: {fileID: 0}
+  altFireCooldown: 0
+  altFireDelay: 0
 --- !u!114 &909548440328401780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,6 +296,9 @@ MonoBehaviour:
   ammoCount: {fileID: 0}
   gunSprite: {fileID: 0}
   gunSlot: 2
+  altFireCooldown: 0
+  altFireDelay: 0
+  altProjectile: {fileID: 904255453233934841, guid: c95ac2ae796323b42ac507594755e9d6, type: 3}
 --- !u!114 &3228584663786290193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pistolScript: {fileID: 6177308808392778675}
   uziScript: {fileID: 909548440328401780}
+  switchTime: 0
   slot1: {fileID: 5188135198990998637, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
   slot2: {fileID: 5692756510128377386, guid: b963ec22f3029e944bbf1fcf2d7019c7, type: 3}
 --- !u!1 &6723760760875195585

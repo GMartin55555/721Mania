@@ -9,6 +9,9 @@ public class UziScript : ProjWeaponClass
     [SerializeField] private float altFireDelay;
     private bool altFireReady = true;
 
+    [Header("AltProjectile")]
+    [SerializeField] private GameObject altProjectile;
+
     private void OnEnable()
     {
         fireAction.action.started += ShootInput;
@@ -42,6 +45,23 @@ public class UziScript : ProjWeaponClass
 
     private void AltShoot()
     {
-        Debug.Log("AltShoot");
+        Ray ray = fpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(75);
+        }
+
+        Vector3 directionWithoutSpread = targetPoint - transform.position;
+
+        GameObject currentBullet = Instantiate(altProjectile, transform.position, Quaternion.identity);
+        currentBullet.transform.forward = directionWithoutSpread.normalized;
+        Debug.Log("Alt Fire");
     }
 }
