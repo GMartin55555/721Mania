@@ -10,6 +10,8 @@ public class TestDummyAIScript : MonoBehaviour
 
     private NavMeshAgent agent;
     private Transform player;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Animator anim;
 
 
     // Start is called before the first frame update
@@ -30,6 +32,8 @@ public class TestDummyAIScript : MonoBehaviour
         {
             StopFollowing();
         }
+
+        anim.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     private void FollowPlayer()

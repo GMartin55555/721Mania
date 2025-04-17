@@ -8,6 +8,8 @@ using TMPro;
 public class ProjWeaponClass : MonoBehaviour
 {
     public GameObject projectile;
+
+
     public float shootForce, upwardForce;
     [Header("Fire Rate")]
     public float timeBetweenShooting, spread, reloadTime;
@@ -22,7 +24,14 @@ public class ProjWeaponClass : MonoBehaviour
 
     public Camera fpsCamera;
     public Transform attackPoint;
-    
+
+    public ManiaControllerScript mania;
+    [Header("Shake")]
+    public float shakeValue;
+    private float shake = 0;
+    public float shakeCount = 0;
+    public GameObject reticle;
+
     public bool allowInvoke = true;
 
     public float damage;
@@ -34,9 +43,16 @@ public class ProjWeaponClass : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] public TMP_Text ammoCount;
-    public RawImage gunSprite;
+    public Image gunSprite;
+    public Animator gunAnim;
     [Header("Gun Slot")]
     public int gunSlot;
+
+    [Header("Audio")]
+    public AudioSource gunAudio;
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
+    public float shootPitchVariation = 0.2f;
 
     private void Awake()
     {
@@ -55,6 +71,8 @@ public class ProjWeaponClass : MonoBehaviour
         gunSprite.gameObject.SetActive(true);
         ammoCount.gameObject.SetActive(true);
         ammoCount.text = (bulletsLeft / bulletsPerTap).ToString();
+
+        reticle = GameObject.FindGameObjectWithTag("reticle");
     }
 
     private void OnDisable()
@@ -79,6 +97,18 @@ public class ProjWeaponClass : MonoBehaviour
             bulletsShot = 0;
             Shoot();
         }
+
+        if (shake > 0)
+        {
+            ScreenShake();
+            shake -= Time.deltaTime;
+        }
+        else
+        {
+            shake = 0;
+            ScreenShakeStop();
+        }
+
     }
 
     public void ShootInput(InputAction.CallbackContext context)
@@ -93,7 +123,11 @@ public class ProjWeaponClass : MonoBehaviour
 
     public void ReloadInput(InputAction.CallbackContext context)
     {
-        Reload();
+        if (reloading || bulletsLeft == magazineSize) return;
+        if (bulletsLeft < magazineSize)
+        {
+            Reload();
+        }
     }
 
     private void Shoot()
@@ -123,6 +157,14 @@ public class ProjWeaponClass : MonoBehaviour
         GameObject currentBullet = Instantiate(projectile, attackPoint.position, Quaternion.identity);
         currentBullet.transform.forward = directionWithSpread.normalized;
 
+        shake = shakeCount;
+        gunAudio.clip = shootSound;
+        gunAudio.pitch = 1 + (Random.Range(-shootPitchVariation, (shootPitchVariation/2)) * (1 + (mania.maniaScore / 50f)));
+        gunAudio.Play(0);
+
+        gunAnim.SetBool("Shot", true);
+        //gunAnim.SetBool("idle", false);
+
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCamera.transform.up * upwardForce, ForceMode.Impulse);
 
@@ -145,13 +187,21 @@ public class ProjWeaponClass : MonoBehaviour
 
     private void ResetShot()
     {
+        ScreenShakeStop();
         readyToShoot = true;
         allowInvoke = true;
+        gunAnim.SetBool("Shot", false);
+        //gunAnim.SetBool("idle", true);
+        Debug.Log("Shot Reset");
     }
 
     private void Reload()
     {
         reloading = true;
+        gunAnim.SetBool("Reloading", true);
+        gunAudio.clip = reloadSound;
+        gunAudio.pitch = 1;
+        gunAudio.Play(0);
         ammoCount.text = "???";
         Invoke("ReloadFinished", reloadTime);
     }
@@ -161,5 +211,19 @@ public class ProjWeaponClass : MonoBehaviour
         bulletsLeft = magazineSize;
         ammoCount.text = bulletsLeft.ToString();
         reloading = false;
+        gunAnim.SetBool("Reloading", false);
+    }
+
+    private void ScreenShake()
+    {
+        float shakeAmount = shakeValue * (1 + (mania.maniaScore / 75f));
+        fpsCamera.transform.localPosition += new Vector3(Random.Range(-shakeAmount, shakeAmount), Random.Range(0, shakeAmount), 0);
+        reticle.transform.localPosition += new Vector3(Random.Range(-shakeAmount * 20f, shakeAmount * 20f), Random.Range(-shakeAmount * 20f, shakeAmount * 20f), 0);
+    }
+
+    private void ScreenShakeStop()
+    {
+        fpsCamera.transform.localPosition = Vector3.zero;
+        reticle.transform.localPosition = Vector3.zero;
     }
 }

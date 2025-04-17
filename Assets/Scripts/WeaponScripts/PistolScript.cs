@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PistolScript : ProjWeaponClass
 {
-    [SerializeField] private ManiaControllerScript mania;
     [SerializeField] private float altFireCooldown;
     [SerializeField] private float altFireDelay;
     private bool altFireReady = true;

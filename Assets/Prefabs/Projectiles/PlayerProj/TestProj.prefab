@@ -146,4 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1079ff7b57da8604ab828b7f20cf3b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  mania: {fileID: 0}
   damage: 0
+  lifeWeapon: 1

@@ -5,8 +5,11 @@ using UnityEngine;
 public class TestProjClass : MonoBehaviour
 {
     public GameObject player;
+    public ManiaControllerScript mania;
 
     public float damage;
+
+    public bool lifeWeapon = false;
 
     private void Start()
     {
@@ -17,6 +20,10 @@ public class TestProjClass : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         DestroyProj();
+        if (lifeWeapon)
+        {
+            mania.maniaScore -= damage;
+        }
     }
 
     public void DestroyProj()
@@ -32,5 +39,6 @@ public class TestProjClass : MonoBehaviour
     public void FindDamage()
     {
         damage = player.GetComponent<ProjWeaponClass>().damage;
+        mania = player.GetComponent<ManiaControllerScript>();
     }
 }

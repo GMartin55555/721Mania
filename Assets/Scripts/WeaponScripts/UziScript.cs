@@ -11,6 +11,7 @@ public class UziScript : ProjWeaponClass
 
     [Header("AltProjectile")]
     [SerializeField] private GameObject altProjectile;
+    public AudioClip altFireSound;
 
     private void OnEnable()
     {
@@ -59,6 +60,11 @@ public class UziScript : ProjWeaponClass
         }
 
         Vector3 directionWithoutSpread = targetPoint - transform.position;
+
+        gunAudio.clip = altFireSound;
+        gunAudio.pitch = 1 + (Random.Range(-shootPitchVariation, (shootPitchVariation / 2)) * (1 + (mania.maniaScore / 50f)));
+        gunAudio.Play(0);
+
 
         GameObject currentBullet = Instantiate(altProjectile, transform.position, Quaternion.identity);
         currentBullet.transform.forward = directionWithoutSpread.normalized;

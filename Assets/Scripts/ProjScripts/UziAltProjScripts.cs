@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UziAltProjScripts : TestProjClass
 {
-    private ManiaControllerScript mania;
 
     private float lifeTime = 2f;
     private float speed;
@@ -12,10 +11,9 @@ public class UziAltProjScripts : TestProjClass
     private void Start()
     {
         FindPlayer();
-        FindDamage();
-        mania = player.GetComponent<ManiaControllerScript>();
         float size = Mathf.Min(mania.maniaScore / 25f, 1f);
         transform.localScale = new Vector3(1f, 1.5f, 0.3f) * size;
+        damage = 10f + mania.maniaScore / 2f;
         speed = mania.maniaScore / 10f + 10f;
     }
 
