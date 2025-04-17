@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class EnemyHealthScript : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
+    [SerializeField] private float maxHealth;
+    private GameObject self;
 
-    private int currentHealth;
+    private float currentHealth;
+    public bool canTakeDamage = true;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        self = gameObject;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -22,17 +25,21 @@ public class EnemyHealthScript : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (canTakeDamage)
         {
-            Die();
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
         }
+
     }
 
     private void Die()
     {
-        Destroy(gameObject);
+        self.SetActive(false);
     }
 }

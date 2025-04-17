@@ -7,6 +7,7 @@ public class PlayerHealthScript : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
     private int currentHealth;
+    [SerializeField] private ManiaControllerScript mania;
 
     private void Awake()
     {
@@ -15,7 +16,6 @@ public class PlayerHealthScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision Detected");
         if (collision.gameObject.CompareTag("DamagesPlayer"))
         {
             TakeDamage(collision.gameObject.GetComponent<DamageToPlayerScript>().damage);
@@ -24,18 +24,22 @@ public class PlayerHealthScript : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (mania.maniaScore < 110f)
+        {
+            //Die();
+        }
+    }
+
     private void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        mania.maniaScore += damage;
     }
 
     private void Die()
     {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene("TestArena");
     }
 
     private void Heal(int healAmount)

@@ -5,11 +5,13 @@ using UnityEngine.AI;
 
 public class TestDummyAIScript : MonoBehaviour
 {
-    [SerializeField] private bool allowFolow;
+    public bool allowFolow;
 
 
     private NavMeshAgent agent;
     private Transform player;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Animator anim;
 
 
     // Start is called before the first frame update
@@ -26,10 +28,21 @@ public class TestDummyAIScript : MonoBehaviour
         {
             FollowPlayer();
         }
+        else
+        {
+            StopFollowing();
+        }
+
+        anim.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     private void FollowPlayer()
     {
         agent.SetDestination(player.position);
+    }
+
+    private void StopFollowing()
+    {
+        agent.SetDestination(transform.position);
     }
 }

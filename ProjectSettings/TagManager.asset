@@ -6,6 +6,9 @@ TagManager:
   tags:
   - DamagesEnemy
   - DamagesPlayer
+  - ManiaControlledEnvironment
+  - ManiaControlledEnemy
+  - reticle
   layers:
   - Default
   - TransparentFX
